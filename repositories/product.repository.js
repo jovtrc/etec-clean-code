@@ -12,6 +12,10 @@ class ProductRepository {
     return productsList;
   }
 
+  findById(id) {
+    return productsList.find((product) => product.id === Number(id));
+  }
+
   findByName(name) {
     const product = productsList.find(
       (product) => product.name.toLowerCase() === name.toLowerCase()
@@ -34,6 +38,18 @@ class ProductRepository {
     productsList.push(newProduct);
 
     return newProduct;
+  }
+
+  delete(id) {
+    const productIndex = productsList.findIndex(
+      (product) => product.id === Number(id)
+    );
+
+    if (productIndex === -1) {
+      return false
+    }
+
+    productsList.splice(productIndex, 1)
   }
 }
 
