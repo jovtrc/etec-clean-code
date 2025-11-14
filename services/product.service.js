@@ -1,4 +1,5 @@
 const Product = require("../entities/product.entity");
+const ProductExistsError = require("../errors/ProductExistsError");
 const productRepository = require("../repositories/product.repository");
 
 class ProductService {
@@ -10,7 +11,7 @@ class ProductService {
     const existingProduct = productRepository.findByName(newProduct.name);
 
     if (existingProduct) {
-      throw new Error("Produto já cadastrado");
+      throw new ProductExistsError();
     }
 
     const productEntity = new Product(newProduct);

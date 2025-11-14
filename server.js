@@ -1,5 +1,6 @@
 const express = require("express");
 const productController = require("./controllers/product.controller");
+const ErrorHandler = require("./middleware/ErrorHandler");
 
 const server = express();
 server.use(express.json());
@@ -12,6 +13,8 @@ server.delete("/products/:id", productController.delete);
 server.get("/", (request, response) => {
   response.send("Hello World");
 });
+
+server.use(ErrorHandler)
 
 server.listen(port, () => {
   console.log("Projeto rodando na porta" + port);
