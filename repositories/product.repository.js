@@ -46,11 +46,11 @@ class ProductRepository {
     );
 
     if (productIndex === -1) {
-      return false
+      return false;
     }
 
-    productsList.splice(productIndex, 1)
+    productsList.splice(productIndex, 1);
   }
 }
 
-module.exports = new ProductRepository();
+module.exports = ProductRepository;

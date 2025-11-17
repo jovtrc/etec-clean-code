@@ -1,14 +1,17 @@
 const Product = require("../entities/product.entity");
 const ProductExistsError = require("../errors/ProductExistsError");
-const productRepository = require("../repositories/product.repository");
 
 class ProductService {
+  constructor(repository) {
+    this.productRepository = repository;
+  }
+
   listAll() {
-    return productRepository.findAll();
+    return this.productRepository.findAll();
   }
 
   create(newProduct) {
-    const existingProduct = productRepository.findByName(newProduct.name);
+    const existingProduct = this.productRepository.findByName(newProduct.name);
 
     if (existingProduct) {
       throw new ProductExistsError();
@@ -16,19 +19,19 @@ class ProductService {
 
     const productEntity = new Product(newProduct);
 
-    return productRepository.create(productEntity);
+    return this.productRepository.create(productEntity);
   }
 
   delete(id) {
     this.findById(id);
 
-    productRepository.delete(id);
+    this.productRepository.delete(id);
 
     return;
   }
 
   findById(id) {
-    const existingProduct = productRepository.findById(id);
+    const existingProduct = this.productRepository.findById(id);
 
     if (!existingProduct) {
       throw new Error("Produto não existe");
@@ -42,4 +45,4 @@ class ProductService {
   // }
 }
 
-module.exports = new ProductService();
+module.exports = ProductService;
